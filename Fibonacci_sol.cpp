@@ -63,6 +63,9 @@ void solve() {
                        {0, 0}});
   int k;
   cin >> k;
+  if (k == 0) {
+    return void(cout << 0 << '\n');
+  }
   Matrix ret = ans * a.pow(k - 2);
   cout << ret[0][0] << '\n';
 }

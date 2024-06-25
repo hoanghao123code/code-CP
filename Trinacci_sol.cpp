@@ -59,6 +59,9 @@ struct Matrix {
 void solve() {
   int k;
   cin >> k;
+  if (k == 1) {
+    return void(cout << 2 << '\n');
+  }
   Matrix a = Matrix({{3, 1, 0, 0},
                      {2, 0, 1, 0},
                      {1, 0, 0, 0},
