@@ -37,7 +37,6 @@ struct Matrix {
       for (int j = 0; j < b.col(); j++) {
         for (int k = 0; k < a.col(); k++) {
           c[i][j] = ((c[i][j] % mod) +  ((a[i][k] % mod) * (b[k][j] % mod)) % mod) % mod;
-          c[i][j] %= mod;
         }
       }
     }
@@ -56,22 +55,25 @@ struct Matrix {
   }
 };
 
+
 void solve() {
-  int k;
-  cin >> k;
-  if (k == 1) {
-    return void(cout << 2 << '\n');
+  int N, K;
+  cin >> N >> K;
+  Matrix a(N, N);
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
+      cin >> a[i][j];
+    }
   }
-  Matrix a = Matrix({{3, 1, 0, 0},
-                     {2, 0, 1, 0},
-                     {1, 0, 0, 0},
-                     {3, 0, 0, 1}});
-  Matrix ans = Matrix({{3, 2, 1, 1},
-                      {0, 0, 0, 0},
-                      {0, 0, 0, 0},
-                      {0, 0, 0, 0}});
-  Matrix ret = ans * a.pow(k - 2);
-  cout << ret[0][0] % mod << '\n';
+  int ans = 0;
+  Matrix ret = a.pow(K);
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
+      ans += ret[i][j];
+      ans %= mod;
+    }
+  }
+  cout << ans << '\n';
 }
 
 int32_t main() {

@@ -5,7 +5,7 @@ using namespace std;
 #define fi first
 #define se second
 
-const int mod = 1e9 + 7;
+const int mod = 998244353;
 
 struct Matrix {
   vector<vector<int>> mt;
@@ -56,22 +56,27 @@ struct Matrix {
   }
 };
 
+int mul(int a, int b) {
+  return ((a % mod) * (b % mod)) % mod;
+}
+
+int add(int a, int b) {
+  return ((a % mod) + (b % mod)) % mod;
+}
+
 void solve() {
+  Matrix a = Matrix({{1, 1},
+                     {1, 0}});
+  Matrix ans = Matrix({{1, 1},
+                       {0, 0}});
   int k;
   cin >> k;
-  if (k == 1) {
-    return void(cout << 2 << '\n');
+  if (k == 0) {
+    return void(cout << 1 << '\n');
   }
-  Matrix a = Matrix({{3, 1, 0, 0},
-                     {2, 0, 1, 0},
-                     {1, 0, 0, 0},
-                     {3, 0, 0, 1}});
-  Matrix ans = Matrix({{3, 2, 1, 1},
-                      {0, 0, 0, 0},
-                      {0, 0, 0, 0},
-                      {0, 0, 0, 0}});
-  Matrix ret = ans * a.pow(k - 2);
-  cout << ret[0][0] % mod << '\n';
+  Matrix fn = ans * a.pow(k - 1);
+  Matrix fn_1 = ans * a.pow(k - 2);
+  cout << mul(fn[0][0], add(fn[0][0], fn_1[0][0])) << '\n';
 }
 
 int32_t main() {

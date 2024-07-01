@@ -57,20 +57,17 @@ struct Matrix {
 };
 
 void solve() {
+  int  a1, b, c, d;
+  cin >> a1 >> b >> c >> d;
+  Matrix a = Matrix({{3, 1, 0, 0},
+                     {2, 0, 0, 0},
+                     {2, 0, 1, 1},
+                     {3, 0, 2, 0}});
+  Matrix ans = Matrix({{a1, b, c, d}});
+
   int k;
   cin >> k;
-  if (k == 1) {
-    return void(cout << 2 << '\n');
-  }
-  Matrix a = Matrix({{3, 1, 0, 0},
-                     {2, 0, 1, 0},
-                     {1, 0, 0, 0},
-                     {3, 0, 0, 1}});
-  Matrix ans = Matrix({{3, 2, 1, 1},
-                      {0, 0, 0, 0},
-                      {0, 0, 0, 0},
-                      {0, 0, 0, 0}});
-  Matrix ret = ans * a.pow(k - 2);
+  Matrix ret = ans * a.pow(k - 1);
   cout << ret[0][0] % mod << '\n';
 }
 

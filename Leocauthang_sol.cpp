@@ -73,7 +73,7 @@ void solve() {
     return void(cout << 4 << '\n');
   }
   Matrix ret = ans * a.pow(k - 3);
-  cout << ret[0][0] << '\n';
+  cout << ret[0][0] % mod << '\n';
 }
 
 int32_t main() {

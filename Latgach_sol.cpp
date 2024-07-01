@@ -5,7 +5,7 @@ using namespace std;
 #define fi first
 #define se second
 
-const int mod = 1e9 + 7;
+const int mod = 111539786;
 
 struct Matrix {
   vector<vector<int>> mt;
@@ -57,20 +57,16 @@ struct Matrix {
 };
 
 void solve() {
+  Matrix a = Matrix({{1, 1},
+                     {1, 0}});
+  Matrix ans = Matrix({{1, 1},
+                       {0, 0}});
   int k;
   cin >> k;
-  if (k == 1) {
-    return void(cout << 2 << '\n');
+  if (k == 0) {
+    return void(cout << 0 << '\n');
   }
-  Matrix a = Matrix({{3, 1, 0, 0},
-                     {2, 0, 1, 0},
-                     {1, 0, 0, 0},
-                     {3, 0, 0, 1}});
-  Matrix ans = Matrix({{3, 2, 1, 1},
-                      {0, 0, 0, 0},
-                      {0, 0, 0, 0},
-                      {0, 0, 0, 0}});
-  Matrix ret = ans * a.pow(k - 2);
+  Matrix ret = ans * a.pow(k - 1);
   cout << ret[0][0] % mod << '\n';
 }
 
@@ -81,7 +77,7 @@ int32_t main() {
     freopen("output.txt", "w", stdout);
   }
   int cas = 1;
-  // cin >> cas;
+  cin >> cas;
   while (cas--) solve();
   return 0;
 }
