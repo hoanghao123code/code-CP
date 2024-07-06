@@ -5,7 +5,8 @@ using namespace std;
 #define fi first
 #define se second
 
-const int mod = 111539786;
+// const int mod = 4294967296;
+const int mod = 1e9 + 7;
 
 struct Matrix {
   vector<vector<int>> mt;
@@ -36,8 +37,8 @@ struct Matrix {
     for (int i = 0; i < a.row(); i++) {
       for (int j = 0; j < b.col(); j++) {
         for (int k = 0; k < a.col(); k++) {
-          c[i][j] = ((c[i][j] % mod) +  ((a[i][k] % mod) * (b[k][j] % mod)) % mod) % mod;
-          c[i][j] %= mod;
+          c[i][j] = ((c[i][j] % (mod - 1)) +  ((a[i][k] % (mod - 1)) * (b[k][j] % (mod - 1))) % (mod - 1)) % (mod - 1);
+          c[i][j] %= (mod - 1);
         }
       }
     }
@@ -56,18 +57,41 @@ struct Matrix {
   }
 };
 
+
+
+int mul(int a, int b) {
+  return ((a % mod) * (b % mod)) % mod;
+}
+
+int power(int a, int b) {
+  int ans = 1;
+  for (; b > 0; b >>= 1, a = mul(a, a)) {
+    if (b & 1) {
+      ans = mul(ans, a);
+    }
+  }
+  return ans;
+}
+
 void solve() {
-  Matrix a = Matrix({{1, 1},
-                     {1, 0}});
-  Matrix ans = Matrix({{1, 1},
-                       {0, 0}});
   int k;
   cin >> k;
-  if (k == 0) {
-    return void(cout << 0 << '\n');
+  Matrix a(65, 65);
+  a[64][64] = 1;
+  for (int i = 0; i < 64; i++) {
+    a[i][64] = 1;
+    for (int j = 0; j < 64; j++) {
+      int r1 = i / 8, c1 = i % 8;
+      int r2 = j / 8, c2 = j % 8;
+      int dist_r = abs(r1 - r2);
+      int dist_c = abs(c1 - c2);
+      if (dist_r == 2 && dist_c == 1 || dist_r == 1 && dist_c == 2) {
+        a[i][j] = 1;
+      }
+    }
   }
-  Matrix ret = ans * a.pow(k - 1);
-  cout << ret[0][0] % mod << '\n';
+  Matrix ret = a.pow(k + 1);
+  cout << ret[0][64] << '\n';
 }
 
 int32_t main() {
@@ -77,7 +101,7 @@ int32_t main() {
     freopen("output.txt", "w", stdout);
   }
   int cas = 1;
-  cin >> cas;
+  // cin >> cas;
   while (cas--) solve();
   return 0;
 }
